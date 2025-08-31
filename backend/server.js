@@ -12,9 +12,9 @@ const app = express();
 connectDB();
 
 // --- Middleware ---
-// Enable Cross-Origin Resource Sharing (CORS) for our frontend
-app.use(cors());
-// Parse incoming JSON requests
+const frontendURL = process.env.FRONTEND_URL || 'http://localhost:3000';
+app.use(cors({ origin: frontendURL }));
+
 app.use(express.json());
 
 // --- API Routes ---

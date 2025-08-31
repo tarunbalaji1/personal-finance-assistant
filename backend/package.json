@@ -11,12 +11,14 @@
   "description": "",
   "dependencies": {
     "bcryptjs": "^3.0.2",
+    "canvas": "^3.2.0",
     "cors": "^2.8.5",
     "dotenv": "^17.2.1",
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.18.0",
     "multer": "^2.0.2",
+    "pdfjs-dist": "^5.4.149",
     "tesseract.js": "^6.0.1"
   }
 }

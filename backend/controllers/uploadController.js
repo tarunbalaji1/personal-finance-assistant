@@ -1,56 +1,89 @@
 const Tesseract = require('tesseract.js');
+// We remove the pdfjs-dist import from here and import it dynamically later
+const { createCanvas } = require('canvas');
 
-// A simple parser to find the total amount in the OCR text
+// Helper function to parse text, same as before
 const parseReceipt = (text) => {
-    // Look for lines that might contain a total amount.
-    // This is a very basic implementation and can be greatly improved.
     const lines = text.split('\n');
     let total = null;
-    
     const keywords = ['total', 'amount', 'subtotal', 'balance'];
-    
     for (const line of lines) {
         const lowerLine = line.toLowerCase();
-        // Check if any keyword exists in the line
         if (keywords.some(keyword => lowerLine.includes(keyword))) {
-            // Use regex to find a monetary value (e.g., 123.45)
             const match = line.match(/(\d+\.\d{2})/);
             if (match && match[0]) {
                 total = parseFloat(match[0]);
-                break; // Stop after finding the first potential total
+                break;
             }
         }
     }
     return { total };
 };
 
+// Refactored OCR logic into its own function, same as before
+const performOCR = async (imageBuffer) => {
+  console.log('Starting OCR process...');
+  const { data: { text } } = await Tesseract.recognize(
+    imageBuffer,
+    'eng',
+    { logger: m => console.log(m) }
+  );
+  console.log('OCR process finished.');
+  return parseReceipt(text);
+};
 
+
+// Main controller function with the dynamic import fix
 exports.scanReceipt = async (req, res) => {
   if (!req.file) {
     return res.status(400).json({ msg: 'No file uploaded.' });
   }
 
   try {
-    console.log('Starting OCR process...');
-    const { data: { text } } = await Tesseract.recognize(
-      req.file.buffer,
-      'eng', // language
-      { logger: m => console.log(m) } // Optional logger
-    );
-    console.log('OCR process finished.');
-    
-    const extractedData = parseReceipt(text);
+    let imageBuffer;
+
+    // Check the file's MIME type
+    if (req.file.mimetype === 'application/pdf') {
+      console.log('PDF detected, starting conversion to image...');
+      
+      // --- THE FIX: Dynamically import the pdfjs-dist package ---
+      const { getDocument } = await import('pdfjs-dist');
+
+      const pdfData = new Uint8Array(req.file.buffer);
+      // Update the call to match the modern API
+      const doc = await getDocument({ data: pdfData }).promise;
+      const page = await doc.getPage(1); // Get the first page
+      const viewport = page.getViewport({ scale: 2.0 }); // Increase scale for better quality
+      
+      const canvas = createCanvas(viewport.width, viewport.height);
+      const context = canvas.getContext('2d');
+
+      await page.render({ canvasContext: context, viewport: viewport }).promise;
+      
+      imageBuffer = canvas.toBuffer('image/png');
+      console.log('PDF conversion successful.');
+
+    } else if (req.file.mimetype.startsWith('image/')) {
+      console.log('Image detected.');
+      // If it's already an image, use its buffer directly
+      imageBuffer = req.file.buffer;
+
+    } else {
+      return res.status(400).json({ msg: 'Unsupported file type. Please upload an image or PDF.' });
+    }
+
+    // Perform OCR on the final image buffer
+    const extractedData = await performOCR(imageBuffer);
 
     res.json({
       success: true,
       data: {
-        rawText: text,
         extracted: extractedData
       }
     });
 
   } catch (error) {
-    console.error('OCR Error:', error);
-    res.status(500).json({ msg: 'Failed to process the receipt.', error: error.message });
+    console.error('File Processing Error:', error);
+    res.status(500).json({ msg: 'Failed to process the file.', error: error.message });
   }
 };

@@ -37,7 +37,7 @@ body.dark {
   --income-border: #27ae60;
 }
 
-/* 2. Update General Body Styles to use Variables */
+/* 2. General Body Styles */
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -56,7 +56,7 @@ body {
   padding: 0 2rem;
 }
 
-/* 3. Update Header and New Theme Toggle Button */
+/* 3. Header & Navigation */
 .header {
   background-color: var(--header-bg-color);
   padding: 1rem 2rem;
@@ -95,8 +95,19 @@ body {
   justify-content: center;
   align-items: center;
 }
+.logout-btn {
+  background: none;
+  border: none;
+  color: var(--btn-bg-color);
+  font-weight: bold;
+  font-size: 1rem;
+  font-family: inherit;
+  cursor: pointer;
+  margin-left: 1rem;
+  padding: 0;
+}
 
-/* 4. Update All Other Components to use Variables */
+/* 4. General Components (Cards, Forms, Buttons) */
 .dashboard-nav {
   display: flex;
   gap: 0.5rem;
@@ -126,7 +137,6 @@ body {
   color: var(--btn-text-color);
   border-color: var(--nav-btn-active-bg);
 }
-
 .card {
   background-color: var(--card-bg-color);
   border: 1px solid var(--border-color);
@@ -135,7 +145,6 @@ body {
   box-shadow: 0 4px 6px var(--shadow-color);
   margin-bottom: 2rem;
 }
-
 .form-group {
   margin-bottom: 1rem;
 }
@@ -154,7 +163,6 @@ body {
   border-radius: 4px;
   box-sizing: border-box;
 }
-
 .btn {
   background-color: var(--btn-bg-color);
   color: var(--btn-text-color);
@@ -171,36 +179,102 @@ body {
   opacity: 0.8;
 }
 
+/* 5. Transaction List Styles */
+.summary-container {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.summary-box {
+  flex: 1;
+  padding: 1rem;
+  border-radius: 8px;
+  text-align: center;
+  color: white;
+}
+.summary-box span {
+  display: block;
+  font-size: 1rem;
+}
+.summary-box .amount {
+  font-size: 1.75rem;
+  font-weight: bold;
+  margin-top: 0.5rem;
+}
+.income-summary {
+  background-color: var(--income-border);
+}
+.expense-summary {
+  background-color: var(--expense-border);
+}
+/* --- Find and replace the entire filter section with this --- */
+
+.filter-controls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+.filter-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+.filter-btn {
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--input-border-color);
+  background-color: transparent;
+  color: var(--text-color);
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+}
+.filter-btn:hover {
+  background-color: var(--border-color);
+}
+.filter-btn.active {
+  background-color: var(--btn-bg-color);
+  color: var(--btn-text-color);
+  border-color: var(--btn-bg-color);
+}
+
+/* This container holds the date inputs */
 .filter-container {
   display: flex;
   gap: 1rem;
-  margin-bottom: 1.5rem;
+}
+
+/* This is the key fix for the alignment */
+.filter-container .form-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0; /* Override default form-group margin */
+}
+
+/* We also need to ensure the label doesn't take up a full line */
+.filter-container .form-group label {
+  margin-bottom: 0;
+  font-weight: bold;
 }
 .transaction-list ul {
   list-style-type: none;
   padding: 0;
 }
-.transaction-list li {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem;
-  border-bottom: 1px solid var(--border-color);
-}
 .transaction-list .expense {
-  border-left: 5px solid var(--expense-border);
+  border-left-color: var(--expense-border);
 }
 .transaction-list .income {
-  border-left: 5px solid var(--income-border);
+  border-left-color: var(--income-border);
 }
-.transaction-list .details {
-  flex-grow: 1;
-  margin-left: 1rem;
-}
-.transaction-list .category {
-  color: var(--text-secondary-color);
-}
-.transaction-list .amount {
+.transaction-list .description {
   font-weight: bold;
 }
 .transaction-list .delete-btn {
@@ -210,34 +284,85 @@ body {
   padding: 0.5rem 0.75rem;
   border-radius: 4px;
   cursor: pointer;
-  margin-left: 1rem;
 }
-/* Add this at the end of your App.css file */
 
-.logout-btn {
-  background: none;
-  border: none;
-  color: var(--btn-bg-color); /* Use the theme's button color */
+/* --- NEW & MODIFIED STYLES for Table Layout --- */
+.list-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 1rem;
+  margin-bottom: 0.5rem;
+  color: var(--text-secondary-color);
   font-weight: bold;
-  font-size: 1rem;
-  font-family: inherit;
-  cursor: pointer;
-  margin-left: 1rem;
-  padding: 0;
+  font-size: 0.9rem;
 }
-/* Find and modify the .charts-container and .chart-wrapper styles */
+.header-date {
+  flex: 0 0 150px;
+}
+.header-details {
+  flex-grow: 1;
+}
+.header-amount {
+  flex: 0 0 180px;
+  text-align: right;
+}
+.transaction-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 1rem;
+  background-color: var(--bg-color);
+  border: 1px solid var(--border-color);
+  border-left-width: 5px;
+  border-radius: 6px;
+  margin-bottom: 0.75rem;
+}
+.date-column {
+  flex: 0 0 150px;
+  color: var(--text-secondary-color);
+}
+.details-column {
+  flex-grow: 1;
+  text-align: left;
+  margin: 0 1rem;
+}
+.amount-container {
+  flex: 0 0 180px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 1rem;
+}
+.transaction-list .amount {
+  font-weight: bold;
+  font-size: 1.1rem;
+  white-space: nowrap;
+}
 
+/* 6. Chart Styles */
 .charts-container {
   display: flex;
   flex-wrap: wrap;
   gap: 2rem;
   justify-content: center;
-  align-items: stretch; /* Makes all wrappers the same height */
+  align-items: stretch;
+}
+.chart-wrapper {
+  flex: 1 1 300px;
+  max-width: 400px;
+  position: relative;
+  height: 350px;
 }
 
-.chart-wrapper {
-  flex: 1 1 300px; /* Flex-grow, flex-shrink, and a base width */
-  max-width: 400px; /* Set a consistent max-width for all charts */
-  position: relative; /* Required for chart.js responsiveness */
-  height: 350px; /* Give all wrappers a fixed height */
+/* --- ADD THIS NEW STYLE for side-by-side date filters --- */
+
+.filter-container .form-group {
+  display: flex;         /* Aligns label and input horizontally */
+  align-items: center;   /* Vertically centers them */
+  gap: 0.5rem;           /* Adds a small space between label and input */
+  margin-bottom: 0;      /* Removes the default bottom margin */
+}
+
+.filter-container .form-group label {
+  margin-bottom: 0; /* Removes the default bottom margin from the label */
 }

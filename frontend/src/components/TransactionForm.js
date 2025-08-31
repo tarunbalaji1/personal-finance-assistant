@@ -1,12 +1,19 @@
-// File Path: src/components/TransactionForm.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-const TransactionForm = ({ onAddTransaction }) => {
+const TransactionForm = ({ onAddTransaction, initialAmount }) => {
   const [type, setType] = useState('expense');
   const [category, setCategory] = useState('');
   const [amount, setAmount] = useState('');
   const [date, setDate] = useState(new Date().toISOString().slice(0, 10));
   const [description, setDescription] = useState('');
+
+  // This effect listens for a pre-filled amount from the receipt scanner
+  // and updates the form's state accordingly.
+  useEffect(() => {
+    if (initialAmount) {
+      setAmount(initialAmount);
+    }
+  }, [initialAmount]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -21,9 +28,8 @@ const TransactionForm = ({ onAddTransaction }) => {
       date,
       description
     };
-    //console.log('1. Submitting from Frontend Form:', newTransaction);
     onAddTransaction(newTransaction);
-    // Reset form
+    // Reset form after submission
     setCategory('');
     setAmount('');
     setDescription('');
