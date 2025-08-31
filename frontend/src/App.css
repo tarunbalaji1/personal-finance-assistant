@@ -1,0 +1,243 @@
+/* 1. Define Color Variables for Light and Dark Themes */
+:root {
+  --bg-color: #f4f7f6;
+  --card-bg-color: #ffffff;
+  --text-color: #333;
+  --text-secondary-color: #7f8c8d;
+  --header-bg-color: #ffffff;
+  --border-color: #eee;
+  --input-border-color: #ccc;
+  --btn-bg-color: #3498db;
+  --btn-text-color: white;
+  --shadow-color: rgba(0,0,0,0.1);
+  --nav-btn-bg: #f9f9f9;
+  --nav-btn-active-bg: #3498db;
+  --nav-btn-text: #34495e;
+  --delete-btn-bg: #e74c3c;
+  --expense-border: #e74c3c;
+  --income-border: #2ecc71;
+}
+
+body.dark {
+  --bg-color: #121212;
+  --card-bg-color: #1e1e1e;
+  --text-color: #f1f1f1;
+  --text-secondary-color: #a0a0a0;
+  --header-bg-color: #1e1e1e;
+  --border-color: #333333;
+  --input-border-color: #444444;
+  --btn-bg-color: #55aaff;
+  --btn-text-color: #121212;
+  --shadow-color: rgba(0,0,0,0.4);
+  --nav-btn-bg: #2c2c2c;
+  --nav-btn-active-bg: #55aaff;
+  --nav-btn-text: #f1f1f1;
+  --delete-btn-bg: #c0392b;
+  --expense-border: #c0392b;
+  --income-border: #27ae60;
+}
+
+/* 2. Update General Body Styles to use Variables */
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 2rem;
+}
+
+/* 3. Update Header and New Theme Toggle Button */
+.header {
+  background-color: var(--header-bg-color);
+  padding: 1rem 2rem;
+  box-shadow: 0 2px 4px var(--shadow-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border-color);
+}
+.header h1 {
+  margin: 0;
+  color: var(--text-color);
+  font-size: 1.5rem;
+}
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+.header nav a {
+  margin-left: 1rem;
+  text-decoration: none;
+  color: var(--btn-bg-color);
+  font-weight: bold;
+}
+.theme-toggle-btn {
+  background: none;
+  border: 1px solid var(--input-border-color);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  font-size: 1.5rem;
+  line-height: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 4. Update All Other Components to use Variables */
+.dashboard-nav {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+  background-color: var(--card-bg-color);
+  padding: 0.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px var(--shadow-color);
+}
+.nav-btn {
+  flex-grow: 1;
+  padding: 1rem;
+  border: 1px solid var(--border-color);
+  background-color: var(--nav-btn-bg);
+  cursor: pointer;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: bold;
+  color: var(--nav-btn-text);
+  transition: all 0.3s ease;
+}
+.nav-btn:hover {
+  opacity: 0.8;
+}
+.nav-btn.active {
+  background-color: var(--nav-btn-active-bg);
+  color: var(--btn-text-color);
+  border-color: var(--nav-btn-active-bg);
+}
+
+.card {
+  background-color: var(--card-bg-color);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px var(--shadow-color);
+  margin-bottom: 2rem;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid var(--input-border-color);
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.btn {
+  background-color: var(--btn-bg-color);
+  color: var(--btn-text-color);
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  text-decoration: none;
+  display: inline-block;
+  transition: background-color 0.3s ease;
+}
+.btn:hover {
+  opacity: 0.8;
+}
+
+.filter-container {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+.transaction-list ul {
+  list-style-type: none;
+  padding: 0;
+}
+.transaction-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid var(--border-color);
+}
+.transaction-list .expense {
+  border-left: 5px solid var(--expense-border);
+}
+.transaction-list .income {
+  border-left: 5px solid var(--income-border);
+}
+.transaction-list .details {
+  flex-grow: 1;
+  margin-left: 1rem;
+}
+.transaction-list .category {
+  color: var(--text-secondary-color);
+}
+.transaction-list .amount {
+  font-weight: bold;
+}
+.transaction-list .delete-btn {
+  background-color: var(--delete-btn-bg);
+  color: white;
+  border: none;
+  padding: 0.5rem 0.75rem;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-left: 1rem;
+}
+/* Add this at the end of your App.css file */
+
+.logout-btn {
+  background: none;
+  border: none;
+  color: var(--btn-bg-color); /* Use the theme's button color */
+  font-weight: bold;
+  font-size: 1rem;
+  font-family: inherit;
+  cursor: pointer;
+  margin-left: 1rem;
+  padding: 0;
+}
+/* Find and modify the .charts-container and .chart-wrapper styles */
+
+.charts-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+  align-items: stretch; /* Makes all wrappers the same height */
+}
+
+.chart-wrapper {
+  flex: 1 1 300px; /* Flex-grow, flex-shrink, and a base width */
+  max-width: 400px; /* Set a consistent max-width for all charts */
+  position: relative; /* Required for chart.js responsiveness */
+  height: 350px; /* Give all wrappers a fixed height */
+}
