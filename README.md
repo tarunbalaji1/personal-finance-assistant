@@ -1,12 +1,12 @@
 # 💰 Personal Finance Assistant
 
-**🚀 Live Demo:** [![Click here]](https://effortless-custard-37a7a8.netlify.app)
+**🚀 Live Demo:** [Click here](https://effortless-custard-37a7a8.netlify.app)
 
 ### 🎥 Project Demo
 
 Click the thumbnail below to watch a full demo of the application.
 
-[![Personal Finance Assistant Demo]](https://drive.google.com/file/d/1TzIlaBQYIuB5Fyr35QDZd7JRiorcG-Kl/view?usp=sharing)
+[Personal Finance Assistant Demo](https://drive.google.com/file/d/1TzIlaBQYIuB5Fyr35QDZd7JRiorcG-Kl/view?usp=sharing)
 
 A full-stack web application designed to help users track, manage, and understand their financial activities. Built with the **MERN stack** (MongoDB, Express.js, React, Node.js), this app allows users to log income and expenses, categorize transactions, and visualize their spending habits through an interactive, multi-chart dashboard.
 
